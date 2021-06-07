@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <h2 class="mt-4">Wir brauchen Hilfe:</h2>
+    <div class="col-xxl-3 col-xl-4 col-md-6 g-4" *ngFor="let item of workNeeds">
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.job }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ item.username }}</h6>
+          <p class="card-text">{{ item.description }}</p>
+          <button class="btn btn-primary" *ngIf="item.username !== username" (click)="open(item)">
+            Kontaktieren
+          </button>
+          <button class="btn btn-danger" *ngIf="item.username == username" (click)="onDelete(item)">Löschen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <h2 class="mt-4">Wir möchten helfen:</h2>
+    <div class="col-xxl-3 col-xl-4 col-md-6 g-4" *ngFor="let item of workWoulds">
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.job }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ item.username }}</h6>
+          <p class="card-text">{{ item.description }}</p>
+          <button class="btn btn-primary" *ngIf="item.username !== username" (click)="open(item)">
+            Kontaktieren
+          </button>
+          <button class="btn btn-danger" *ngIf="item.username == username" (click)="onDelete(item)">Löschen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

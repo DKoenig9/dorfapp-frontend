@@ -1,0 +1,120 @@
+<div class="px-4 pt-5 my-5 text-center border-bottom">
+  <h1 class="display-4 fw-bold">Willkommen in Hofolpe</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
+      inventore, expedita natus ipsa, voluptatem nobis commodi ipsam aliquid
+      placeat dolorum tempora consectetur, itaque dolore suscipit eveniet
+      corporis ex repudiandae perferendis.
+    </p>
+  </div>
+  <div class="overflow-hidden" style="max-height: 30vh">
+    <div class="container px-5">
+      <img
+        src="https://www.lokalplus.nrw/images/articles/2019/06/oe-kirchhundem-34332/34332_264912_104054.jpg"
+        class="img-fluid border rounded-3 shadow-lg mb-4"
+        alt="Example image"
+        width="700"
+        height="500"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</div>
+<div class="b-example-divider"></div>
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+  <div class="row align-items-center g-lg-5 py-5">
+    <div class="col-lg-7 text-center text-lg-start">
+      <h1 class="display-4 fw-bold lh-1 mb-3">
+        Noch keinen Account für die DorfApp?
+      </h1>
+      <p class="col-lg-10 fs-4">
+        Kein Problem, gib hier einfach deine Daten an. Diese werden dann
+        überprüft und danach geht es auch schon direkt los!
+      </p>
+    </div>
+    <div class="col-md-10 mx-auto col-lg-5">
+      <form
+        class="p-4 p-md-5 border rounded-3 bg-light"
+        [formGroup]="signupForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="form-floating mb-3">
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            formControlName="email"
+            placeholder="name@example.com"
+          />
+          <label for="email">Email address</label
+          ><span
+            class="help-block"
+            *ngIf="
+              !signupForm.get('email').valid && signupForm.get('email').touched
+            "
+            >Bitte gib eine gültige Email an</span
+          >
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="max mustermann"
+            formControlName="username"
+          />
+          <label for="username">Vor-/ und Zuname</label>
+          <span
+            class="help-block"
+            *ngIf="
+              !signupForm.get('username').valid &&
+              signupForm.get('username').touched
+            "
+            >Gib bitte deinen Vor- und deinen Nachnamen an</span
+          >
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="phoneNumber"
+            placeholder="name@example.com"
+            formControlName="phoneNumber"
+          />
+          <label for="phoneNumber">Telefonnummer</label>
+          <span
+            class="help-block"
+            *ngIf="
+              !signupForm.get('phoneNumber').valid &&
+              signupForm.get('phoneNumber').touched
+            "
+            >Bitte gib eine gültige Telefonnummer an</span
+          >
+        </div>
+        <div class="checkbox mb-3">
+          <label>
+            <input
+              type="checkbox"
+              value="remember-me"
+              formControlName="happy"
+            />
+            Freu mich drauf
+          </label>
+        </div>
+        <button
+          class="w-100 btn btn-lg btn-primary"
+          type="submit"
+          [disabled]="!signupForm.valid"
+        >
+          Sign up
+        </button>
+        <hr class="my-4" />
+        <small class="text-muted"
+          >By clicking Sign up, you agree to the terms of use.</small
+        >
+      </form>
+    </div>
+  </div>
+</div>
+<app-toasts aria-live="polite" aria-atomic="true" class="mt-5"></app-toasts>

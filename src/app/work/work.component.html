@@ -1,0 +1,105 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{heading}}</h4>
+    <button
+      type="button"
+      class="close btn"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          name="job"
+          id="job"
+          class="form-control"
+          ngModel
+          required
+          #job = "ngModel"
+          placeholder="Rasen Mähen"
+        />
+        <label for="job">Job-Bezeichnung</label>
+        <span class="help-block" *ngIf="!job.valid && job.touched">Erstelle eine kurze Überschrift, die den Job gut beschreibt</span>
+      </div>
+      <div class="form-floating mb-3">
+        <textarea
+          id="description"
+          name="description"
+          class="form-control"
+          ngModel
+          required
+          #description ="ngModel"
+          placeholder="Ich benötige Hilfe beim Rasen mähen."
+        ></textarea>
+        <label for="description" class="form-label">Beschreibung</label>
+        <span class="help-block" *ngIf="!description.valid && description.touched">Beschreibe die Art von Job so genau wie möglich</span>
+      </div>
+      <button class="btn btn-primary" [disabled]="!f.valid" (click)="modal.close('Save click')">Erstellen</button>
+    </form>
+  </div>
+</ng-template>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 g-4">
+      <div class="card h-100" style="width: 18rem">
+        <img
+          src="https://images.unsplash.com/photo-1594403264009-19047d763c3b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body">
+          <h5 class="card-title">Ich brauche Hilfe</h5>
+          <p class="card-text">
+            Gib dein Anliegen an (z.B. Rasen mähen) und vielleicht findet sich
+            ja wer
+          </p>
+        </div>
+        <a  class="btn btn-secondary" (click)="openWorkNeed(content)">Hilfe suchen</a>
+      </div>
+    </div>
+    <div class="col-lg-4 g-4">
+      <div class="card h-100" style="width: 18rem">
+        <img
+          src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body">
+          <h5 class="card-title">Ich möchte helfen</h5>
+          <p class="card-text">
+            Du kannst etwas besonders gut oder willst etwas bestimmtes gerne für
+            andere übernehmen? Gib dein Angebot an.
+          </p>
+        </div>
+
+        <a class="btn btn-secondary" (click)="openWorkWould(content)">Erstellen</a>
+      </div>
+    </div>
+    <div class="col-lg-4 g-4">
+      <div class="card h-100" style="width: 18rem">
+        <img
+          src="https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80"
+          class="card-img-top"
+          alt="..."
+        />  
+        <div class="card-body">
+          <h5 class="card-title">Suchen</h5>
+          <p class="card-text">
+            Hier kannst du nach bestimmten Aufgaben suchen.
+          </p>
+        </div>
+        <a routerLink="all" class="btn btn-secondary">Alle Inhalte</a>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <router-outlet></router-outlet>
+</div>

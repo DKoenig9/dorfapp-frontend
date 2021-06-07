@@ -1,0 +1,25 @@
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.help-block {
+  color: red;
+}
+
+#eb2IGSz1jay31_to {
+  animation: eb2IGSz1jay31_to__to 3000ms linear 1 normal forwards;
+}
+@keyframes eb2IGSz1jay31_to__to {
+  0% {
+    transform: translate(-71.15px, -57.51px);
+  }
+  
+  100% {
+    transform: translate(-52.902277px, -173.22191px);
+    opacity: 0%;
+  }
+}
+
+svg {
+  margin-top: 50px;
+}

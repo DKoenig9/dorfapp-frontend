@@ -1,0 +1,106 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Beitrag hinzufügen</h4>
+    <button
+      type="button"
+      class="close btn"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          placeholder="name@example.com"
+          name="title"
+          ngModel
+          required
+        />
+        <label for="title">Titel</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="teaser"
+          placeholder="name@example.com"
+          name="teaser"
+          ngModel
+          required
+        />
+        <label for="teaser">Kurzbeschreibung</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="link"
+          placeholder="name@example.com"
+          name="link"
+          ngModel
+          required
+        />
+        <label for="link">Link</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="imgUrl"
+          placeholder="name@example.com"
+          name="imgUrl"
+          ngModel
+          required
+        />
+        <label for="imgUrl">Bild-Url</label>
+      </div>
+      <button
+      type="submit"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+      [disabled]="!f.valid"
+    >
+      Hinzufügen
+    </button>
+    </form>
+  </div>
+
+    
+ 
+</ng-template>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 g-4" *ngFor="let item of boardContent">
+      <div class="card h-100" style="width: 18rem">
+        <img src="{{ item.imgUrl }}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">{{ item.title }}</h5>
+          <p class="card-text">{{ item.teaser }}</p>
+          <a href="{{ item.link }}" target="_blank" class="btn btn-primary">Weiterlesen</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 g-4 h-100" *ngIf="userRole==='admin'">
+      <div class="card text-white bg-secondary mb-3" style="max-width: 18rem">
+        <div class="card-header">Hinzufügen</div>
+        <div class="card-body">
+          <h5 class="card-title">Einen weiteren Beitrag hinzufügen</h5>
+          <p class="card-text">
+            Wähle ein Bild, einen Titel und eine Beschreibung aus und schon
+            gehts los.
+          </p>
+          <button class="btn btn-success" (click)="open(content)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-toasts aria-live="polite" aria-atomic="true" class="mt-5"></app-toasts>

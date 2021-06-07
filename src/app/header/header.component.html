@@ -1,0 +1,139 @@
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a href="#" class="navbar-brand">Hofolpe</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a routerLinkActive="active" routerLink="/main" class="nav-link">Startseite</a>
+        <a routerLinkActive="active" routerLink="/auth" class="nav-link" *ngIf=!isAuth>Login</a>
+        <a routerLinkActive="active" routerLink="/board" class="nav-link" *ngIf="isAuth">Schwarzes Brett</a>
+        <a routerLinkActive="active" routerLink="/work" class="nav-link" *ngIf="isAuth">Arbeit</a>
+        <a routerLinkActive="active" routerLink="/settings" class="nav-link" *ngIf="isAuth">Eingeloggt als <strong>{{username}}</strong></a>
+      </div>
+      
+    </div>
+  </div>
+</nav> -->
+
+<nav class="py-2 bg-light border-bottom">
+  <div class="container d-flex flex-wrap">
+    <ul class="nav me-auto">
+      <li class="nav-item">
+        <a routerLink="/main" class="nav-link link-dark px-2">Hofolpe</a>
+      </li>
+      <li class="nav-item">
+        <a
+          routerLinkActive="active"
+          routerLink="/main"
+          class="nav-link link-dark px-2"
+          >Startseite</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          routerLinkActive="active"
+          routerLink="#"
+          class="nav-link link-dark px-2"
+          >Über Uns</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          routerLinkActive="active"
+          routerLink="#"
+          class="nav-link link-dark px-2"
+          >Bilder</a
+        >
+      </li>
+
+      <li class="nav-item">
+        <a
+          routerLinkActive="active"
+          routerLink="/board"
+          class="nav-link link-dark px-2"
+          *ngIf="isAuth"
+          >Schwarzes Brett</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          routerLinkActive="active"
+          routerLink="/work/all"
+          class="nav-link link-dark px-2"
+          *ngIf="isAuth"
+          >Helfen</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          routerLinkActive="active"
+          routerLink="#"
+          class="nav-link link-dark px-2"
+          *ngIf="isAuth"
+          >Marktplatz</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          routerLinkActive="active"
+          routerLink="#"
+          class="nav-link link-dark px-2"
+          *ngIf="isAuth"
+          >Events</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          routerLinkActive="active"
+          routerLink="#"
+          class="nav-link link-dark px-2"
+          *ngIf="isAuth"
+          >Kurz notiert</a
+        >
+      </li>
+    </ul>
+    <ul class="nav">
+      <li class="nav-item">
+        <a
+          routerLinkActive="active"
+          routerLink="/auth"
+          class="nav-link link-dark px-2"
+          *ngIf="!isAuth"
+          >Login</a
+        >
+      </li>
+
+      <li ngbDropdown class="nav-item dropdown" *ngIf="isAuth">
+        <a
+          ngbDropdownToggle
+          class="nav-link dropdown-toggle"
+          id="navbarDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          eingeloggt als {{ username }}
+        </a>
+        <ul
+          ngbDropdownMenu
+          class="dropdown-menu"
+          aria-labelledby="navbarDropdown"
+        >
+          <li>
+            <a class="dropdown-item" routerLink="/profile">Mein Profil</a>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="/settings">Einstellungen</a>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="/admin" *ngIf="userRole==='admin'">Admin Panel</a>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item" style="cursor: pointer;" (click)="onLogout()">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
