@@ -8,6 +8,7 @@ import { WorkWould } from '../work-would.model';
 import { WorkNeed } from '../work-need.model';
 import { modalWork } from 'src/app/shared/modals/modal-work.component';
 import { modalDelete } from 'src/app/shared/modals/modal-delete.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-work-all',
@@ -20,6 +21,7 @@ export class WorkAllComponent implements OnInit {
   workNeeds: WorkNeed[] = [];
   phoneNumber: string;
   username: string;
+  updateForm: FormGroup;
   private userSub: Subscription;
   private workNeedSub: Subscription;
   private workWouldSub: Subscription;
@@ -82,5 +84,18 @@ export class WorkAllComponent implements OnInit {
     const modalRef = this.modalService.open(modalDelete);
     modalRef.componentInstance.item = item;
     modalRef.componentInstance.text = `dein Job ${item.job}`;
+  }
+
+  openUpdate(content, item:WorkNeed) {
+    console.log(content);
+
+    this.updateForm = new FormGroup({
+      job: new FormControl(item.job, Validators.required),
+      description: new FormControl(item.description, Validators.required),
+    });
+
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title',
+    });
   }
 }
