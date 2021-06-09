@@ -12,39 +12,6 @@ import { modalDelete } from '../shared/modals/modal-delete.component';
 import { ToastService } from '../shared/toasts/toast.service';
 import { AdminPanelService } from './admin-panel.service';
 
-interface Usert {
-  username: string;
-  email: string;
-  phoneNumber: string;
-  userRole: string;
-}
-
-const USERT: Usert[] = [
-  {
-    username: 'Daniel König',
-    email: 'daniel.koenig@gmail.com',
-    phoneNumber: '31252353456',
-    userRole: 'admin',
-  },
-  {
-    username: 'Leinad König',
-    email: 'daniel.koenig@gmail.com',
-    phoneNumber: '67946534',
-    userRole: 'admin',
-  },
-  {
-    username: 'Peter König',
-    email: 'daniel.koenig@gmail.com',
-    phoneNumber: '547546734',
-    userRole: 'redakteur',
-  },
-  {
-    username: 'Test König',
-    email: 'daniel.koenig@gmail.com',
-    phoneNumber: '547457457',
-    userRole: 'member',
-  },
-];
 
 @Component({
   selector: 'app-admin-panel',

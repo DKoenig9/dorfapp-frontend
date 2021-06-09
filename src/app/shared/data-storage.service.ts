@@ -232,6 +232,29 @@ export class DataStorageService {
     });
   }
 
+  updateWorkNeed(
+    id: string,
+    job: string,
+    description: string,
+  ) {
+    return this.apollo.mutate({
+      mutation: gql`
+      mutation {
+        editWorkNeed(
+          id: "${id}"
+          job: "${job}"
+          description: "${description}"
+        ) {
+          id
+          username
+          job
+          description
+        }
+      }
+      `,
+    });
+  }
+
   deleteWorkNeedById(id: string) {
     this.apollo
       .mutate({

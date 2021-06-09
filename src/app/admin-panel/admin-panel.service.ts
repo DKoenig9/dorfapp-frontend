@@ -8,7 +8,6 @@ import { ToastService } from '../shared/toasts/toast.service';
 export class AdminPanelService {
   users: BehaviorSubject<Array<User>> = new BehaviorSubject([]);
   oldValue: User[];
-  check = true;
   constructor(
     private dataStorageService: DataStorageService,
     private toastService: ToastService
@@ -16,21 +15,26 @@ export class AdminPanelService {
 
   addUser(dataObj) {
     const currentValue = this.users.value;
-    currentValue.forEach((element) => {
-      if (element === dataObj) {
-        console.error('Existiert bereits');
-        this.toastService.show('Nutzer liegt bereits in der Liste', {
-          classname: 'bg-danger text-light',
-          delay: 5000,
-        });
-        this.check = false;
-      }
-    });
-    if (this.check) {
-      const updatedValue = [...currentValue, dataObj];
-      this.oldValue = this.users.value.slice();
-      this.users.next(updatedValue);
+    console.log(currentValue);
+    console.log(dataObj);
+    
+
+    const newArray = this.arrayUnique(currentValue.concat(dataObj));
+    this.oldValue = this.users.value.slice();
+    this.users.next(newArray);
+
+  }
+
+  arrayUnique(array){
+    let a = array.concat();
+    for(let i=0; i<a.length; ++i) {
+        for(let j=i+1; j<a.length; ++j) {
+            if(a[i].id === a[j].id)
+                a.splice(j--, 1);
+        }
     }
+
+    return a;
   }
 
   updateUsers(data) {
@@ -76,14 +80,16 @@ export class AdminPanelService {
   searchUser(text) {
     this.dataStorageService.getUserBySomething(text).valueChanges.subscribe(
       ({ data }: any) => {
+        console.log(data.usersBySomething);
+        
         this.addUser(data.usersBySomething);
-        if (this.check) {
+        
           this.toastService.show('Suche erfolgreich', {
             classname: 'bg-success text-light',
             delay: 3000,
           });
           this.oldValue = this.users.value.slice();
-        }
+        
       },
       (err) => {
         console.error(err);

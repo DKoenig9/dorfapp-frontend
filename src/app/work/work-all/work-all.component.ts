@@ -22,6 +22,8 @@ export class WorkAllComponent implements OnInit {
   phoneNumber: string;
   username: string;
   updateForm: FormGroup;
+  itemName: string;
+  id: string;
   private userSub: Subscription;
   private workNeedSub: Subscription;
   private workWouldSub: Subscription;
@@ -86,8 +88,10 @@ export class WorkAllComponent implements OnInit {
     modalRef.componentInstance.text = `dein Job ${item.job}`;
   }
 
-  openUpdate(content, item:WorkNeed) {
+  openUpdate(content, item) {
     console.log(content);
+    this.itemName = item.job;
+    this.id = item.id;
 
     this.updateForm = new FormGroup({
       job: new FormControl(item.job, Validators.required),
@@ -97,5 +101,12 @@ export class WorkAllComponent implements OnInit {
     this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
     });
+  }
+
+  onUpdate(){
+    console.log("moin");
+    const { job, description } =
+      this.updateForm.value;
+      this.workService.updateWorkNeed(this.id, job, description);
   }
 }
