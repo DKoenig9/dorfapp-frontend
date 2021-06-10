@@ -888,6 +888,7 @@
           stroke-width="1"
         />
       </svg>
+
       <div class="alert alert-danger" *ngIf="error">
         <p>{{ error }}</p>
       </div>
@@ -896,7 +897,7 @@
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
-      <form #f="ngForm" (ngSubmit)="onSubmit(f)" *ngIf="!isLoading">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" *ngIf="!isLoading">
         <h2 class="mt-3">Hier kannst du dich einloggen</h2>
 
         <div class="form-floating mb-4 mt-4">
@@ -905,13 +906,14 @@
             name="email"
             id="email"
             class="form-control"
-            ngModel
-            required
-            email
-            #email="ngModel"
+            formControlName="email"
             placeholder="email@email.com"
           /><label for="email">E-Mail</label>
-          <span class="help-block" *ngIf="!email.valid && email.touched"
+          <span
+            class="help-block"
+            *ngIf="
+              !loginForm.get('email').valid && loginForm.get('email').touched
+            "
             >Um dich einzuloggen, musst du deine Email angeben</span
           >
         </div>
@@ -921,44 +923,24 @@
             name="password"
             id="password"
             class="form-control"
-            ngModel
-            required
-            minlength="6"
+            formControlName="password"
             placeholder="password"
-            #password="ngModel"
           /><label for="password">Passwort</label>
-          <span class="help-block" *ngIf="!password.valid && password.touched"
+          <span
+            class="help-block"
+            *ngIf="
+              !loginForm.get('password').valid &&
+              loginForm.get('password').touched
+            "
             >Dein Passwort hat mindestens 6 zeichen</span
           >
         </div>
-        <div class="form-floating mb-4" *ngIf="!isLoginMode">
-          <input
-            type="text"
-            name="username"
-            id="username"
-            class="form-control"
-            ngModel
-            required
-            placeholder="username"
-          /><label for="username">Vollständiger Name</label>
-        </div>
-        <div class="form-floating mb-4" *ngIf="!isLoginMode">
-          <input
-            type="tel"
-            name="phoneNumber"
-            id="phoneNumber"
-            class="form-control"
-            ngModel
-            required
-            placeholder="phone"
-          /><label for="phoneNumber">Telefonnummer</label>
-        </div>
-        <button class="btn btn-primary" type="submit" [disabled]="!f.valid">
-          {{ isLoginMode ? "Login" : "Konto Erstellen" }}
-        </button>
-        |
-        <button class="btn btn-primary" type="button" (click)="onSwitchMode()">
-          Switch to {{ !isLoginMode ? "Login" : "Konto Erstellen" }}
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!loginForm.valid"
+        >
+          Login
         </button>
       </form>
     </div>

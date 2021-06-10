@@ -8,11 +8,14 @@ import { WorkAllComponent } from './work/work-all/work-all.component';
 import { WorkComponent } from './work/work.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AboutComponent } from './about/about.component';
 
 //Routing lieber auf deutsch, weils ja sowieso alles deutschsprachig ist?
 const routes: Routes = [
   { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'main', component: MainComponent },
+  { path: 'about', component: AboutComponent },
   { path: 'auth', component: AuthComponent },
 
   { path: 'board', component: BoardComponent, canActivate: [AuthGuard] },
@@ -23,6 +26,12 @@ const routes: Routes = [
     children: [
       { path: 'all', component: WorkAllComponent, canActivate: [AuthGuard] },
     ],
+  },
+
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
   },
 
   {

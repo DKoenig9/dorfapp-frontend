@@ -12,7 +12,6 @@ import { modalDelete } from '../shared/modals/modal-delete.component';
 import { ToastService } from '../shared/toasts/toast.service';
 import { AdminPanelService } from './admin-panel.service';
 
-
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
@@ -27,6 +26,7 @@ export class AdminPanelComponent implements OnInit {
   updateForm: FormGroup;
   username: string;
   id: string;
+  firstSearch = false;
 
   constructor(
     private authService: AuthService,
@@ -68,6 +68,7 @@ export class AdminPanelComponent implements OnInit {
       .subscribe(
         ({ data }: any) => {
           console.log(data);
+          this.firstSearch = true;
           this.adminPanelService.addUser(data.createUser);
           this.toastService.show('Erfolgreich erstellt', {
             classname: 'bg-success text-light',
@@ -85,6 +86,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   onSearch() {
+    this.firstSearch = true;
     this.adminPanelService.searchUser(this.searchForm.value.text);
   }
 
@@ -92,7 +94,7 @@ export class AdminPanelComponent implements OnInit {
     this.username = user.username;
     this.id = user.id;
     console.log(user.userRole);
-    
+
     this.updateForm = new FormGroup({
       email: new FormControl(user.email, [
         Validators.required,
@@ -113,6 +115,9 @@ export class AdminPanelComponent implements OnInit {
     console.log(this.updateForm.value);
     const { email, username, password, phoneNumber, userRole } =
       this.updateForm.value;
+      console.log(password);
+      
+
     this.adminPanelService.updateUser(
       this.id,
       email,

@@ -1,0 +1,37 @@
+.editButton {
+  position: relative;
+  float: right;
+  left: 7px;
+  cursor: pointer;
+  color: black;
+  transition: 0.2s;
+  &:hover {
+    color: blue;
+    transition: 0.2s;
+  }
+}
+.deleteButton {
+  position: relative;
+  float: right;
+  color: black;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    color: red;
+    transition: 0.2s;
+  }
+}
+
+#description {
+  height: 100px;
+}
+
+.card {
+  transition: 0.4s;
+  &:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+      rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    transition: 0.4s;
+  }
+}

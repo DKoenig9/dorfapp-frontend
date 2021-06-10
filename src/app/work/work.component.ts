@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
@@ -13,6 +13,8 @@ import { WorkService } from './work.service';
   styleUrls: ['./work.component.css'],
 })
 export class WorkComponent implements OnInit {
+  submitForm: FormGroup;
+  userId: string;
   username: string;
   phoneNumber: string;
   type: string;
@@ -29,9 +31,16 @@ export class WorkComponent implements OnInit {
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe((user) => {
       if (user) {
+        this.userId = user.id;
         this.username = user.username;
         this.phoneNumber = user.phoneNumber;
       }
+    });
+
+    this.submitForm = new FormGroup({
+      jobCategory: new FormControl('default'),
+      job: new FormControl(null),
+      description: new FormControl(null, Validators.required),
     });
   }
 
@@ -47,23 +56,34 @@ export class WorkComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  onSubmit(form) {
-    const { job, description } = form.value;
-    const username = this.username;
-    const phoneNumber = this.phoneNumber;
+  onSubmit() {
+    let { jobCategory, job, description } = this.submitForm.value;
+    if (jobCategory === 'default') {
+      console.log('default');
+    } else {
+      console.log('was anderes');
+      job = jobCategory;
+    }
 
     if (this.type === 'would') {
       this.dataStorageService
-        .storeWorkWould(username, job, description, phoneNumber)
+        .storeWorkWould(
+          this.username,
+          this.userId,
+          job,
+          description,
+          this.phoneNumber
+        )
         .subscribe(
           ({ data }: any) => {
             this.workService.addWorkWould({
               __typename: 'WorkWould',
               id: data.createWorkWould.id,
-              username,
+              username: this.username,
+              userId: this.userId,
               job,
               description,
-              phoneNumber,
+              phoneNumber: this.phoneNumber,
             });
           },
           (error) => {
@@ -72,16 +92,23 @@ export class WorkComponent implements OnInit {
         );
     } else if (this.type === 'need') {
       this.dataStorageService
-        .storeWorkNeed(username, job, description, phoneNumber)
+        .storeWorkNeed(
+          this.username,
+          this.userId,
+          job,
+          description,
+          this.phoneNumber
+        )
         .subscribe(
           ({ data }: any) => {
             this.workService.addWorkNeed({
               __typename: 'WorkNeed',
               id: data.createWorkNeed.id,
-              username,
+              userId: this.userId,
+              username: this.username,
               job,
               description,
-              phoneNumber,
+              phoneNumber: this.phoneNumber,
             });
           },
           (error) => {
@@ -90,7 +117,8 @@ export class WorkComponent implements OnInit {
         );
     } else {
       console.error('Fehler');
-      this.form.reset();
+      this.submitForm.reset();
     }
+    this.submitForm.reset();
   }
 }

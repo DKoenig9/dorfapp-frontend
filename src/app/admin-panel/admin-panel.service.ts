@@ -17,21 +17,18 @@ export class AdminPanelService {
     const currentValue = this.users.value;
     console.log(currentValue);
     console.log(dataObj);
-    
 
     const newArray = this.arrayUnique(currentValue.concat(dataObj));
     this.oldValue = this.users.value.slice();
     this.users.next(newArray);
-
   }
 
-  arrayUnique(array){
+  arrayUnique(array) {
     let a = array.concat();
-    for(let i=0; i<a.length; ++i) {
-        for(let j=i+1; j<a.length; ++j) {
-            if(a[i].id === a[j].id)
-                a.splice(j--, 1);
-        }
+    for (let i = 0; i < a.length; ++i) {
+      for (let j = i + 1; j < a.length; ++j) {
+        if (a[i].id === a[j].id) a.splice(j--, 1);
+      }
     }
 
     return a;
@@ -41,12 +38,16 @@ export class AdminPanelService {
     this.users.next(data);
   }
 
-  deleteOld(dataObj) {
+  updateOld(dataObj) {
     console.log(dataObj);
+    console.log(this.oldValue);
 
     this.oldValue.forEach((element, index) => {
-      if (element.id === dataObj.id) this.oldValue.splice(index, 1);
+      if (element.id === dataObj.id) {
+        this.oldValue[index] = dataObj;
+      }
     });
+    console.log(this.oldValue);
     this.users.next(this.oldValue);
   }
 
@@ -81,15 +82,14 @@ export class AdminPanelService {
     this.dataStorageService.getUserBySomething(text).valueChanges.subscribe(
       ({ data }: any) => {
         console.log(data.usersBySomething);
-        
+
         this.addUser(data.usersBySomething);
-        
-          this.toastService.show('Suche erfolgreich', {
-            classname: 'bg-success text-light',
-            delay: 3000,
-          });
-          this.oldValue = this.users.value.slice();
-        
+
+        this.toastService.show('Suche erfolgreich', {
+          classname: 'bg-success text-light',
+          delay: 3000,
+        });
+        this.oldValue = this.users.value.slice();
       },
       (err) => {
         console.error(err);
@@ -107,7 +107,7 @@ export class AdminPanelService {
       .subscribe(
         ({ data }: any) => {
           console.log(data.editUser);
-          this.deleteOld(data.editUser);
+          this.updateOld(data.editUser);
           this.toastService.show('Erfolgreich geändert', {
             classname: 'bg-success text-light',
             delay: 3000,

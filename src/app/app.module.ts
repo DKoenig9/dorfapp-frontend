@@ -20,6 +20,8 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ToastsContainer } from './shared/toasts/toasts-container.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { ToastsContainer } from './shared/toasts/toasts-container.component';
     AuthComponent,
     UserSettingsComponent,
     AdminPanelComponent,
-    ToastsContainer
+    ToastsContainer,
+    ProfileComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

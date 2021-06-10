@@ -1,5 +1,5 @@
-import { Component, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ToastService } from '../shared/toasts/toast.service';
 import { AuthService } from './auth.service';
@@ -9,26 +9,25 @@ import { AuthService } from './auth.service';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css'],
 })
-export class AuthComponent {
-  isLoginMode = true;
+export class AuthComponent implements OnInit {
   isLoading = false;
+  loginForm: FormGroup;
   error: string = null;
-  @Output() isLoginValid: boolean = null;
 
   constructor(
     private authService: AuthService,
     private toastService: ToastService
   ) {}
 
-  onSwitchMode() {
-    this.isLoginMode = !this.isLoginMode;
+  ngOnInit() {
+    this.loginForm = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, Validators.required),
+    });
   }
 
-  onSubmit(input: NgForm) {
-    if (!input.valid) {
-      return;
-    }
-    const { email, password, username, phoneNumber } = input.value;
+  onLogin() {
+    const { email, password } = this.loginForm.value;
 
     this.authService.loginUser(email, password).subscribe(
       (data) => {
@@ -40,13 +39,13 @@ export class AuthComponent {
       },
       (err) => {
         console.log(err);
-        this.toastService.show('Fehler',{
+        this.toastService.show('Fehler', {
           classname: 'bg-danger text-light',
           delay: 15000,
         });
       }
     );
 
-    input.reset();
+    this.loginForm.reset();
   }
 }

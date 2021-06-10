@@ -134,13 +134,14 @@ export class DataStorageService {
   }
 
   //neues WorkWould speichern
-  storeWorkWould(username, job, description, phoneNumber) {
+  storeWorkWould(username, userId, job, description, phoneNumber) {
     return this.apollo.mutate({
       mutation: gql`
           mutation {
             createWorkWould(
               createWorkWouldInput: {
                 username: "${username}"
+                userId: "${userId}"
                 job: "${job}"
                 description: "${description}"
                 phoneNumber: "${phoneNumber}"
@@ -161,11 +162,31 @@ export class DataStorageService {
           workWoulds {
             id
             username
+            userId
             job
             description
             phoneNumber
           }
         }
+      `,
+    });
+  }
+
+  updateWorkWould(id: string, job: string, description: string) {
+    return this.apollo.mutate({
+      mutation: gql`
+      mutation {
+        editWorkWould(
+          id: "${id}"
+          job: "${job}"
+          description: "${description}"
+        ) {
+          id
+          username
+          job
+          description
+        }
+      }
       `,
     });
   }
@@ -196,13 +217,14 @@ export class DataStorageService {
   }
 
   //neues WorkNeed speichern
-  storeWorkNeed(username, job, description, phoneNumber) {
+  storeWorkNeed(username, userId, job, description, phoneNumber) {
     return this.apollo.mutate({
       mutation: gql`
           mutation {
             createWorkNeed(
               createWorkNeedInput: {
                 username: "${username}"
+                userId: "${userId}"
                 job: "${job}"
                 description: "${description}"
                 phoneNumber: "${phoneNumber}"
@@ -223,6 +245,7 @@ export class DataStorageService {
           workNeeds {
             id
             username
+            userId
             job
             description
             phoneNumber
@@ -232,11 +255,7 @@ export class DataStorageService {
     });
   }
 
-  updateWorkNeed(
-    id: string,
-    job: string,
-    description: string,
-  ) {
+  updateWorkNeed(id: string, job: string, description: string) {
     return this.apollo.mutate({
       mutation: gql`
       mutation {

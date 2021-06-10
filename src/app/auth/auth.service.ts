@@ -100,6 +100,59 @@ export class AuthService {
     localStorage.removeItem('userData');
   }
 
+  updateUser(
+    id: string,
+    email: string,
+    password: string,
+    username: string,
+    phoneNumber: string,
+    userRole: string
+  ) {
+    this.apollo
+      .mutate({
+        mutation: gql`
+        mutation {
+          editUser(
+            id: "${id}"
+            email: "${email}"
+            password: "${password}"
+            username: "${username}"
+            phoneNumber: "${phoneNumber}"
+            userRole: "${userRole}"
+          ) {
+            id
+            email
+            password
+            username
+            phoneNumber 
+            userRole
+          }
+        }
+      `,
+      })
+      .subscribe(
+        ({ data }: any) => {
+          console.log(data.editUser);
+          const { id, email, password, username, phoneNumber, userRole } =
+            data.editUser;
+          console.log('Passwort nach update: ', password);
+          const user = new User(
+            id,
+            email,
+            password,
+            username,
+            phoneNumber,
+            userRole
+          );
+          this.user.next(user);
+          localStorage.setItem('userData', JSON.stringify(user));
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+
   private handleAuthentication(
     id: string,
     email: string,

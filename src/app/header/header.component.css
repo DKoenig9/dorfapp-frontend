@@ -1,3 +1,9 @@
 .active {
 color: #457b9d;
 }
+
+svg{
+position: relative;
+bottom: 3px;  
+margin: 0 10px ;
+}

@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{heading}}</h4>
+    <h4 class="modal-title" id="modal-basic-title">{{ heading }}</h4>
     <button
       type="button"
       class="close btn"
@@ -11,40 +11,62 @@
     </button>
   </div>
   <div class="modal-body">
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <form [formGroup]="submitForm" (ngSubmit)="onSubmit(f)">
+      <div class="mb-3">
+        <select
+          class="form-select"
+          id="jobCategory"
+          aria-label="Default select example"
+          formControlName="jobCategory"
+        >
+          <option value="default">Einen Job auswählen</option>
+          <option value="Rasen Mähen">Rasen Mähen</option>
+          <option value="Nachhilfe">Nachhilfe</option>
+        </select>
+      </div>
       <div class="form-floating mb-3">
         <input
           type="text"
           name="job"
           id="job"
           class="form-control"
-          ngModel
-          required
-          #job = "ngModel"
+          formControlName="job"
           placeholder="Rasen Mähen"
         />
-        <label for="job">Job-Bezeichnung</label>
-        <span class="help-block" *ngIf="!job.valid && job.touched">Erstelle eine kurze Überschrift, die den Job gut beschreibt</span>
+        <label for="job">Job-Bezeichnung (wenn keine Kategorie passt)</label>
+        <span
+          class="help-block"
+          *ngIf="!submitForm.get('job').valid && submitForm.get('job').touched"
+          >Erstelle eine kurze Überschrift, die den Job gut beschreibt</span
+        >
       </div>
       <div class="form-floating mb-3">
         <textarea
           id="description"
-          name="description"
           class="form-control"
-          ngModel
-          required
-          #description ="ngModel"
+          formControlName="description"
           placeholder="Ich benötige Hilfe beim Rasen mähen."
         ></textarea>
         <label for="description" class="form-label">Beschreibung</label>
-        <span class="help-block" *ngIf="!description.valid && description.touched">Beschreibe die Art von Job so genau wie möglich</span>
+        <span
+          class="help-block"
+          *ngIf="
+            !submitForm.get('description').valid &&
+            submitForm.get('description').touched
+          "
+          >Beschreibe die Art von Job so genau wie möglich</span
+        >
       </div>
-      <button class="btn btn-primary" [disabled]="!f.valid" (click)="modal.close('Save click')">Erstellen</button>
+      <button
+        class="btn btn-primary"
+        [disabled]="!submitForm.valid"
+        (click)="modal.close('Save click')"
+      >
+        Erstellen
+      </button>
     </form>
   </div>
 </ng-template>
-
-
 
 <div class="container">
   <div class="row">
@@ -62,7 +84,9 @@
             ja wer
           </p>
         </div>
-        <a  class="btn btn-secondary" (click)="openWorkNeed(content)">Hilfe suchen</a>
+        <a class="btn btn-secondary" (click)="openWorkNeed(content)"
+          >Hilfe suchen</a
+        >
       </div>
     </div>
     <div class="col-lg-4 g-4">
@@ -80,7 +104,9 @@
           </p>
         </div>
 
-        <a class="btn btn-secondary" (click)="openWorkWould(content)">Erstellen</a>
+        <a class="btn btn-secondary" (click)="openWorkWould(content)"
+          >Erstellen</a
+        >
       </div>
     </div>
     <div class="col-lg-4 g-4">
@@ -89,7 +115,7 @@
           src="https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80"
           class="card-img-top"
           alt="..."
-        />  
+        />
         <div class="card-body">
           <h5 class="card-title">Suchen</h5>
           <p class="card-text">

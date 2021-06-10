@@ -13,7 +13,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-work-all',
   templateUrl: './work-all.component.html',
-  styleUrls: ['./work-all.component.css'],
+  styleUrls: ['./work-all.component.scss'],
 })
 export class WorkAllComponent implements OnInit {
   isOwn: boolean = false;
@@ -21,9 +21,11 @@ export class WorkAllComponent implements OnInit {
   workNeeds: WorkNeed[] = [];
   phoneNumber: string;
   username: string;
+  userId: string;
   updateForm: FormGroup;
   itemName: string;
   id: string;
+  itemType: string;
   private userSub: Subscription;
   private workNeedSub: Subscription;
   private workWouldSub: Subscription;
@@ -38,11 +40,13 @@ export class WorkAllComponent implements OnInit {
     //loginDaten
     this.userSub = this.authService.user.subscribe((user) => {
       if (user) {
+        this.userId = user.id;
         this.username = user.username;
       }
     });
 
     //WorkNeeds von Datenbank
+
     this.dataStorageService
       .fetchWorkNeeds()
       .valueChanges.subscribe((result: any) => {
@@ -90,8 +94,11 @@ export class WorkAllComponent implements OnInit {
 
   openUpdate(content, item) {
     console.log(content);
+    console.log(item);
+
     this.itemName = item.job;
     this.id = item.id;
+    this.itemType = item.__typename;
 
     this.updateForm = new FormGroup({
       job: new FormControl(item.job, Validators.required),
@@ -103,10 +110,16 @@ export class WorkAllComponent implements OnInit {
     });
   }
 
-  onUpdate(){
-    console.log("moin");
-    const { job, description } =
-      this.updateForm.value;
+  onUpdate() {
+    console.log('moin');
+    console.log(this.itemType);
+
+    const { job, description } = this.updateForm.value;
+
+    if (this.itemType === 'WorkNeed') {
       this.workService.updateWorkNeed(this.id, job, description);
+    } else if (this.itemType === 'WorkWould') {
+      this.workService.updateWorkWould(this.id, job, description);
+    }
   }
 }

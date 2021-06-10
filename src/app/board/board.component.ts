@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
@@ -18,6 +18,7 @@ export class BoardComponent implements OnInit {
   boardContent: BoardContent[] = [];
   userRole: string;
   closeResult = '';
+  submitForm: FormGroup;
 
   constructor(
     private boardService: BoardService,
@@ -42,18 +43,24 @@ export class BoardComponent implements OnInit {
         console.log(result);
         this.boardContent = result.data.boardItems;
       });
+
+    this.submitForm = new FormGroup({
+      title: new FormControl(null, Validators.required),
+      teaser: new FormControl(null, Validators.required),
+      link: new FormControl(null, Validators.required),
+      imgUrl: new FormControl(null, Validators.required),
+    });
   }
 
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  onSubmit(input) {
-  
-    const { teaser, imgUrl, title, link } = input.value;
+  onSubmit() {
+    const { teaser, imgUrl, title, link } = this.submitForm.value;
 
     this.dataStorageService.storeBoardItem(title, teaser, link, imgUrl);
-  
+
     const boardItem: BoardContent = {
       title,
       teaser,

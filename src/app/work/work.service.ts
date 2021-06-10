@@ -13,14 +13,16 @@ export class WorkService {
   workWoulds: BehaviorSubject<Array<WorkWould>> = new BehaviorSubject([]);
   oldValue: WorkNeed[];
 
-  constructor(private dataStorageService: DataStorageService,
-    private toastService: ToastService) {}
+  constructor(
+    private dataStorageService: DataStorageService,
+    private toastService: ToastService
+  ) {}
 
   updateWorkNeeds(data) {
     this.workNeeds.next(data);
   }
 
-  addWorkNeed(dataObj) {
+  addWorkNeed(dataObj: WorkNeed) {
     const currentValue = this.workNeeds.value;
     const updatedValue = [...currentValue, dataObj];
 
@@ -33,19 +35,18 @@ export class WorkService {
     this.dataStorageService.deleteWorkNeedById(dataObj.id);
     const value: WorkNeed[] = this.workNeeds.value.slice();
     console.log(value);
-   
+
     value.forEach((element, index) => {
       if (element === dataObj) value.splice(index, 1);
     });
     this.workNeeds.next(value);
-  
   }
 
   updateWorkWoulds(data) {
     this.workWoulds.next(data);
   }
 
-  addWorkWould(dataObj) {
+  addWorkWould(dataObj: WorkWould) {
     const currentValue = this.workWoulds.value;
     const updatedValue = [...currentValue, dataObj];
 
@@ -54,19 +55,19 @@ export class WorkService {
 
   deleteWorkWould(dataObj) {
     console.log(dataObj);
-    
+
     this.dataStorageService.deleteWorkWouldById(dataObj.id);
     const value: WorkWould[] = this.workWoulds.value.slice();
-    
+
     value.forEach((element, index) => {
       if (element === dataObj) value.splice(index, 1);
     });
     this.workWoulds.next(value);
   }
 
-  updateWorkNeed (id,job, description){
-    console.log("hier");
-    
+  updateWorkNeed(id, job, description) {
+    console.log('hier');
+
     this.dataStorageService.updateWorkNeed(id, job, description).subscribe(
       ({ data }: any) => {
         console.log(data);
@@ -78,18 +79,41 @@ export class WorkService {
       },
       (err) => {
         console.log(err);
+        this.toastService.show(err, {
+          classname: 'bg-danger text-light',
+          delay: 5000,
+        });
+      }
+    );
+  }
+
+  updateWorkWould(id, job, description) {
+    this.dataStorageService.updateWorkWould(id, job, description).subscribe(
+      ({ data }: any) => {
+        console.log(data);
+        this.deleteOld(data.editWorkWould);
+        this.toastService.show('Erfolgreich geändert', {
+          classname: 'bg-success text-light',
+          delay: 3000,
+        });
+      },
+      (err) => {
+        console.log(err);
+        this.toastService.show(err, {
+          classname: 'bg-danger text-light',
+          delay: 5000,
+        });
       }
     );
   }
 
   deleteOld(dataObj) {
     console.log(dataObj);
-    if(this.oldValue){
+    if (this.oldValue) {
       this.oldValue.forEach((element, index) => {
-      if (element.id === dataObj.id) this.oldValue.splice(index, 1);
-    });
-    this.workNeeds.next(this.oldValue);
+        if (element.id === dataObj.id) this.oldValue.splice(index, 1);
+      });
+      this.workNeeds.next(this.oldValue);
     }
-    
   }
 }

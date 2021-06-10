@@ -11,7 +11,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <form [formGroup]="submitForm" (ngSubmit)="onSubmit(f)">
       <div class="form-floating mb-3">
         <input
           type="text"
@@ -19,8 +19,7 @@
           id="title"
           placeholder="name@example.com"
           name="title"
-          ngModel
-          required
+          formControlName="title"
         />
         <label for="title">Titel</label>
       </div>
@@ -31,8 +30,7 @@
           id="teaser"
           placeholder="name@example.com"
           name="teaser"
-          ngModel
-          required
+          formControlName="teaser"
         />
         <label for="teaser">Kurzbeschreibung</label>
       </div>
@@ -43,8 +41,7 @@
           id="link"
           placeholder="name@example.com"
           name="link"
-          ngModel
-          required
+          formControlName="link"
         />
         <label for="link">Link</label>
       </div>
@@ -55,24 +52,20 @@
           id="imgUrl"
           placeholder="name@example.com"
           name="imgUrl"
-          ngModel
-          required
+          formControlName="imgUrl"
         />
         <label for="imgUrl">Bild-Url</label>
       </div>
       <button
-      type="submit"
-      class="btn btn-outline-dark"
-      (click)="modal.close('Save click')"
-      [disabled]="!f.valid"
-    >
-      Hinzufügen
-    </button>
+        type="submit"
+        class="btn btn-outline-dark"
+        (click)="modal.close('Save click')"
+        [disabled]="!submitForm.valid"
+      >
+        Hinzufügen
+      </button>
     </form>
   </div>
-
-    
- 
 </ng-template>
 <div class="container">
   <div class="row">
@@ -82,12 +75,14 @@
         <div class="card-body">
           <h5 class="card-title">{{ item.title }}</h5>
           <p class="card-text">{{ item.teaser }}</p>
-          <a href="{{ item.link }}" target="_blank" class="btn btn-primary">Weiterlesen</a>
+          <a href="{{ item.link }}" target="_blank" class="btn btn-primary"
+            >Weiterlesen</a
+          >
         </div>
       </div>
     </div>
 
-    <div class="col-md-3 g-4 h-100" *ngIf="userRole==='admin'">
+    <div class="col-md-3 g-4 h-100" *ngIf="userRole === 'admin'">
       <div class="card text-white bg-secondary mb-3" style="max-width: 18rem">
         <div class="card-header">Hinzufügen</div>
         <div class="card-body">

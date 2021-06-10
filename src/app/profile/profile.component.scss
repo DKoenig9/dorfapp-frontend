@@ -1,0 +1,10 @@
+svg {
+  transition: 1s;
+  &:hover {
+    height: 200px;
+    width: 200px;
+    transition: 1s;
+  }
+}
+
+
