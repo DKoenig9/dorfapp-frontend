@@ -10,6 +10,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AboutComponent } from './about/about.component';
+import { ChatComponent } from './chat/chat.component';
 
 //Routing lieber auf deutsch, weils ja sowieso alles deutschsprachig ist?
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
       { path: 'all', component: WorkAllComponent, canActivate: [AuthGuard] },
     ],
   },
+  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
 
   {
     path: 'profile',

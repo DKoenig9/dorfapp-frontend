@@ -52,7 +52,6 @@ export class modalDelete {
   ) {}
 
   onDelete(item) {
-    console.log(item);
     if (item.__typename === 'User') {
       this.adminPanelService.deleteUser(item);
     } else if (item.__typename === 'WorkWould') {

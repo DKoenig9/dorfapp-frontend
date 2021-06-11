@@ -1,0 +1,84 @@
+<div class="container">
+  <div *ngIf="userRole === 'admin'">
+    <form [formGroup]="chatForm" (ngSubmit)="onSubmit()" class="row bg-light">
+      <div class="col-sm-4 mt-2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Titel"
+          formControlName="title"
+        />
+      </div>
+      <div class="col-sm-3 mt-2">
+        <select
+          class="form-select"
+          id="category"
+          aria-label="Default select example"
+          formControlName="category"
+        >
+          <option value="Sport">Sport</option>
+          <option value="Schützenverein">Schützenverein</option>
+          <option value="Tambourkorps">Tambourkorps</option>
+        </select>
+      </div>
+      <div class="col-sm-4 mt-2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Bild"
+          formControlName="img"
+        />
+      </div>
+      <div class="col-sm-1 mt-2">
+        <input
+          type="color"
+          class="form-control form-control-color"
+          id="exampleColorInput"
+          value="#e76f51"
+          title="Such dir eine Farbe aus"
+          formControlName="color"
+        />
+      </div>
+      <div class="col-sm-10 mt-3">
+        <textarea
+          id="description"
+          class="form-control"
+          formControlName="message"
+          placeholder="Nachricht"
+        ></textarea>
+      </div>
+      <div class="col-sm-2 mt-3">
+        <button class="btn btn-success">Senden</button>
+      </div>
+    </form>
+  </div>
+  <h5 class="bg-light mb-0 p-2">Zu folgenden Kategorien bekomme ich Benachrichtigungen</h5>
+  <div class="row bg-light m-0">
+    <div class="col-lg-2 " *ngFor="let category of categories">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="{{ category }}" />
+        <label class="form-check-label" for="{{ category }}">{{
+          category
+        }}</label>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-3" *ngFor="let item of chat">
+    <img *ngIf="item.img" src="{{ item.img }}" class="card-img-top" alt="..." />
+    <h5 class="card-header">
+      {{ item.username }}
+    </h5>
+    <div class="card-body">
+      <h5 class="card-title">{{ item.title }} - {{ item.category }}</h5>
+      <p class="card-text">
+        {{ item.message }}
+      </p>
+      <p class="card-text">
+        <small class="text-muted"
+          >{{ item.createdAt.toLocaleDateString() }} -
+          {{ item.createdAt.toLocaleTimeString() }}</small
+        >
+      </p>
+    </div>
+  </div>
+</div>

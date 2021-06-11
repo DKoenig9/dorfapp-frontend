@@ -8,6 +8,7 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  public isMenuCollapsed = true;
   private userSub: Subscription;
   isAuth = false;
   username: string;
@@ -27,9 +28,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  onLogout(){
-    console.log("logout");
-    
+  onLogout(){    
     this.authService.logout();
   }
 

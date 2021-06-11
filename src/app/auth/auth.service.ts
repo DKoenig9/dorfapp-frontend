@@ -56,7 +56,6 @@ export class AuthService {
       })
       .pipe(
         tap((resData) => {
-          console.log(resData.data);
           const { id, email, password, username, phoneNumber, userRole } =
             resData.data.login;
           this.handleAuthentication(
@@ -132,10 +131,8 @@ export class AuthService {
       })
       .subscribe(
         ({ data }: any) => {
-          console.log(data.editUser);
           const { id, email, password, username, phoneNumber, userRole } =
             data.editUser;
-          console.log('Passwort nach update: ', password);
           const user = new User(
             id,
             email,
@@ -148,7 +145,7 @@ export class AuthService {
           localStorage.setItem('userData', JSON.stringify(user));
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         }
       );
   }

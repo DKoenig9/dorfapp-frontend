@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+
 import { AuthService } from '../auth/auth.service';
 import { DataStorageService } from '../shared/data-storage.service';
-import { WorkAllComponent } from './work-all/work-all.component';
 import { WorkService } from './work.service';
 
 @Component({
@@ -20,7 +20,6 @@ export class WorkComponent implements OnInit {
   type: string;
   heading: string;
   private userSub: Subscription;
-  @ViewChild('f', { static: false }) form: NgForm;
   constructor(
     private modalService: NgbModal,
     private dataStorageService: DataStorageService,
@@ -58,10 +57,12 @@ export class WorkComponent implements OnInit {
 
   onSubmit() {
     let { jobCategory, job, description } = this.submitForm.value;
-    if (jobCategory === 'default') {
-      console.log('default');
+    console.log(jobCategory);
+
+    if (jobCategory === 'default' || !jobCategory) {
+      console.log('jobCategory wird nicht verwendet');
     } else {
-      console.log('was anderes');
+      console.log('jobCategory wird verwendet');
       job = jobCategory;
     }
 
@@ -87,7 +88,7 @@ export class WorkComponent implements OnInit {
             });
           },
           (error) => {
-            console.log(error);
+            console.error(error);
           }
         );
     } else if (this.type === 'need') {
@@ -112,13 +113,13 @@ export class WorkComponent implements OnInit {
             });
           },
           (error) => {
-            console.log(error);
+            console.error(error);
           }
         );
     } else {
       console.error('Fehler');
-      this.submitForm.reset();
+      this.submitForm.reset({ jobCategory: 'default' });
     }
-    this.submitForm.reset();
+    this.submitForm.reset({ jobCategory: 'default' });
   }
 }

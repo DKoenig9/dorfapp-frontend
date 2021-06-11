@@ -1,33 +1,263 @@
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a href="#" class="navbar-brand">Hofolpe</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+  <div class="container d-flex flex-wrap">
+    <a class="navbar-brand" routerLink="main">Hofolpe</a>
+
+    <!-- Step 3: Toggle the value of the property when the toggler button is clicked. -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="isMenuCollapsed = !isMenuCollapsed"
+    >
+      &#9776;
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a routerLinkActive="active" routerLink="/main" class="nav-link">Startseite</a>
-        <a routerLinkActive="active" routerLink="/auth" class="nav-link" *ngIf=!isAuth>Login</a>
-        <a routerLinkActive="active" routerLink="/board" class="nav-link" *ngIf="isAuth">Schwarzes Brett</a>
-        <a routerLinkActive="active" routerLink="/work" class="nav-link" *ngIf="isAuth">Arbeit</a>
-        <a routerLinkActive="active" routerLink="/settings" class="nav-link" *ngIf="isAuth">Eingeloggt als <strong>{{username}}</strong></a>
-      </div>
-      
+
+    <!-- Step 2: Add the ngbCollapse directive to the element below. -->
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <!-- Step 4: Close the menu when a link is clicked. -->
+          <a
+            routerLinkActive="active"
+            routerLink="/main"
+            class="nav-link link-dark px-2"
+            (click)="isMenuCollapsed = true"
+            >Startseite</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            routerLink="/about"
+            class="nav-link link-dark px-2"
+            (click)="isMenuCollapsed = true"
+            >Über Uns</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            routerLink="#"
+            class="nav-link link-dark px-2"
+            (click)="isMenuCollapsed = true"
+            >Bilder</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            routerLink="/board"
+            class="nav-link link-dark px-2"
+            *ngIf="isAuth"
+            (click)="isMenuCollapsed = true"
+            >Schwarzes Brett</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            routerLink="/work/all"
+            class="nav-link link-dark px-2"
+            *ngIf="isAuth"
+            (click)="isMenuCollapsed = true"
+            >Helfen</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            routerLink="#"
+            class="nav-link link-dark px-2"
+            *ngIf="isAuth"
+            (click)="isMenuCollapsed = true"
+            >Marktplatz</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            routerLink="#"
+            class="nav-link link-dark px-2"
+            *ngIf="isAuth"
+            (click)="isMenuCollapsed = true"
+            >Events</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            routerLink="chat"
+            class="nav-link link-dark px-2"
+            *ngIf="isAuth"
+            (click)="isMenuCollapsed = true"
+            >Kurz notiert</a
+          >
+        </li>
+      </ul>
+      <ul class="nav">
+        <li class="nav-item">
+          <a
+            routerLinkActive="active"
+            routerLink="/auth"
+            class="nav-link link-dark px-2"
+            *ngIf="!isAuth"
+            (click)="isMenuCollapsed = true"
+            >Login</a
+          >
+        </li>
+        <li ngbDropdown class="nav-item dropdown" *ngIf="isAuth">
+          <a
+            ngbDropdownToggle
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            >{{ username }}
+            <svg
+              id="457bf273-24a3-4fd8-a857-e9b918267d6a"
+              data-name="Layer 1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="32"
+              height="32"
+              viewBox="0 0 698 698"
+            >
+              <defs>
+                <linearGradient
+                  id="b247946c-c62f-4d08-994a-4c3d64e1e98f"
+                  x1="349"
+                  y1="698"
+                  x2="349"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop offset="0" stop-color="gray" stop-opacity="0.25" />
+                  <stop offset="0.54" stop-color="gray" stop-opacity="0.12" />
+                  <stop offset="1" stop-color="gray" stop-opacity="0.1" />
+                </linearGradient>
+              </defs>
+              <title>profile pic</title>
+              <g opacity="0.5">
+                <circle
+                  cx="349"
+                  cy="349"
+                  r="349"
+                  fill="url(#b247946c-c62f-4d08-994a-4c3d64e1e98f)"
+                />
+              </g>
+              <circle cx="349.68" cy="346.77" r="341.64" fill="#f5f5f5" />
+              <path
+                d="M601,790.76a340,340,0,0,0,187.79-56.2c-12.59-68.8-60.5-72.72-60.5-72.72H464.09s-45.21,3.71-59.33,67A340.07,340.07,0,0,0,601,790.76Z"
+                transform="translate(-251 -101)"
+                fill="#6c63ff"
+              />
+              <circle cx="346.37" cy="339.57" r="164.9" fill="#333" />
+              <path
+                d="M293.15,476.92H398.81a0,0,0,0,1,0,0v84.53A52.83,52.83,0,0,1,346,614.28h0a52.83,52.83,0,0,1-52.83-52.83V476.92a0,0,0,0,1,0,0Z"
+                opacity="0.1"
+              />
+              <path
+                d="M296.5,473h99a3.35,3.35,0,0,1,3.35,3.35v81.18A52.83,52.83,0,0,1,346,610.37h0a52.83,52.83,0,0,1-52.83-52.83V476.35A3.35,3.35,0,0,1,296.5,473Z"
+                fill="#fdb797"
+              />
+              <path
+                d="M544.34,617.82a152.07,152.07,0,0,0,105.66.29v-13H544.34Z"
+                transform="translate(-251 -101)"
+                opacity="0.1"
+              />
+              <circle cx="346.37" cy="372.44" r="151.45" fill="#fdb797" />
+              <path
+                d="M489.49,335.68S553.32,465.24,733.37,390l-41.92-65.73-74.31-26.67Z"
+                transform="translate(-251 -101)"
+                opacity="0.1"
+              />
+              <path
+                d="M489.49,333.78s63.83,129.56,243.88,54.3l-41.92-65.73-74.31-26.67Z"
+                transform="translate(-251 -101)"
+                fill="#333"
+              />
+              <path
+                d="M488.93,325a87.49,87.49,0,0,1,21.69-35.27c29.79-29.45,78.63-35.66,103.68-69.24,6,9.32,1.36,23.65-9,27.65,24-.16,51.81-2.26,65.38-22a44.89,44.89,0,0,1-7.57,47.4c21.27,1,44,15.4,45.34,36.65.92,14.16-8,27.56-19.59,35.68s-25.71,11.85-39.56,14.9C608.86,369.7,462.54,407.07,488.93,325Z"
+                transform="translate(-251 -101)"
+                fill="#333"
+              />
+              <ellipse
+                cx="194.86"
+                cy="372.3"
+                rx="14.09"
+                ry="26.42"
+                fill="#fdb797"
+              />
+              <ellipse
+                cx="497.8"
+                cy="372.3"
+                rx="14.09"
+                ry="26.42"
+                fill="#fdb797"
+              />
+            </svg>
+          </a>
+          <ul ngbDropdownMenu class="dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/profile"
+                (click)="isMenuCollapsed = true"
+                >Mein Profil</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/settings"
+                (click)="isMenuCollapsed = true"
+                >Einstellungen</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/admin"
+                *ngIf="userRole === 'admin'"
+                (click)="isMenuCollapsed = true"
+                >Admin Panel</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item"
+                style="cursor: pointer"
+                (click)="onLogout()"
+                (click)="isMenuCollapsed = true"
+                >Logout</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
-</nav> -->
+</nav>
 
-<nav class="py-2 bg-light border-bottom">
+<!-- <nav class="py-2 bg-light border-bottom">
   <div class="container d-flex flex-wrap">
+    <a class="navbar-brand" [routerLink]="'.'">Responsive navbar</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="isMenuCollapsed = !isMenuCollapsed"
+    >
+      &#9776;
+    </button>
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
     <ul class="nav me-auto">
-      <li class="nav-item">
-        <a routerLink="/main" class="nav-link link-dark px-2">Hofolpe</a>
-      </li>
       <li class="nav-item">
         <a
           routerLinkActive="active"
           routerLink="/main"
           class="nav-link link-dark px-2"
+          (click)="isMenuCollapsed = true"
           >Startseite</a
         >
       </li>
@@ -36,6 +266,7 @@
           routerLinkActive="active"
           routerLink="/about"
           class="nav-link link-dark px-2"
+          (click)="isMenuCollapsed = true"
           >Über Uns</a
         >
       </li>
@@ -44,6 +275,7 @@
           routerLinkActive="active"
           routerLink="#"
           class="nav-link link-dark px-2"
+          (click)="isMenuCollapsed = true"
           >Bilder</a
         >
       </li>
@@ -54,6 +286,7 @@
           routerLink="/board"
           class="nav-link link-dark px-2"
           *ngIf="isAuth"
+          (click)="isMenuCollapsed = true"
           >Schwarzes Brett</a
         >
       </li>
@@ -63,6 +296,7 @@
           routerLink="/work/all"
           class="nav-link link-dark px-2"
           *ngIf="isAuth"
+          (click)="isMenuCollapsed = true"
           >Helfen</a
         >
       </li>
@@ -72,6 +306,7 @@
           routerLink="#"
           class="nav-link link-dark px-2"
           *ngIf="isAuth"
+          (click)="isMenuCollapsed = true"
           >Marktplatz</a
         >
       </li>
@@ -81,15 +316,17 @@
           routerLink="#"
           class="nav-link link-dark px-2"
           *ngIf="isAuth"
+          (click)="isMenuCollapsed = true"
           >Events</a
         >
       </li>
       <li class="nav-item">
         <a
           routerLinkActive="active"
-          routerLink="#"
+          routerLink="chat"
           class="nav-link link-dark px-2"
           *ngIf="isAuth"
+          (click)="isMenuCollapsed = true"
           >Kurz notiert</a
         >
       </li>
@@ -101,6 +338,7 @@
           routerLink="/auth"
           class="nav-link link-dark px-2"
           *ngIf="!isAuth"
+          (click)="isMenuCollapsed = true"
           >Login</a
         >
       </li>
@@ -114,89 +352,7 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-        {{username}}
-          <svg
-            id="457bf273-24a3-4fd8-a857-e9b918267d6a"
-            data-name="Layer 1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            width="32"
-            height="32"
-            viewBox="0 0 698 698"
-          >
-            <defs>
-              <linearGradient
-                id="b247946c-c62f-4d08-994a-4c3d64e1e98f"
-                x1="349"
-                y1="698"
-                x2="349"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop offset="0" stop-color="gray" stop-opacity="0.25" />
-                <stop offset="0.54" stop-color="gray" stop-opacity="0.12" />
-                <stop offset="1" stop-color="gray" stop-opacity="0.1" />
-              </linearGradient>
-            </defs>
-            <title>profile pic</title>
-            <g opacity="0.5">
-              <circle
-                cx="349"
-                cy="349"
-                r="349"
-                fill="url(#b247946c-c62f-4d08-994a-4c3d64e1e98f)"
-              />
-            </g>
-            <circle cx="349.68" cy="346.77" r="341.64" fill="#f5f5f5" />
-            <path
-              d="M601,790.76a340,340,0,0,0,187.79-56.2c-12.59-68.8-60.5-72.72-60.5-72.72H464.09s-45.21,3.71-59.33,67A340.07,340.07,0,0,0,601,790.76Z"
-              transform="translate(-251 -101)"
-              fill="#6c63ff"
-            />
-            <circle cx="346.37" cy="339.57" r="164.9" fill="#333" />
-            <path
-              d="M293.15,476.92H398.81a0,0,0,0,1,0,0v84.53A52.83,52.83,0,0,1,346,614.28h0a52.83,52.83,0,0,1-52.83-52.83V476.92a0,0,0,0,1,0,0Z"
-              opacity="0.1"
-            />
-            <path
-              d="M296.5,473h99a3.35,3.35,0,0,1,3.35,3.35v81.18A52.83,52.83,0,0,1,346,610.37h0a52.83,52.83,0,0,1-52.83-52.83V476.35A3.35,3.35,0,0,1,296.5,473Z"
-              fill="#fdb797"
-            />
-            <path
-              d="M544.34,617.82a152.07,152.07,0,0,0,105.66.29v-13H544.34Z"
-              transform="translate(-251 -101)"
-              opacity="0.1"
-            />
-            <circle cx="346.37" cy="372.44" r="151.45" fill="#fdb797" />
-            <path
-              d="M489.49,335.68S553.32,465.24,733.37,390l-41.92-65.73-74.31-26.67Z"
-              transform="translate(-251 -101)"
-              opacity="0.1"
-            />
-            <path
-              d="M489.49,333.78s63.83,129.56,243.88,54.3l-41.92-65.73-74.31-26.67Z"
-              transform="translate(-251 -101)"
-              fill="#333"
-            />
-            <path
-              d="M488.93,325a87.49,87.49,0,0,1,21.69-35.27c29.79-29.45,78.63-35.66,103.68-69.24,6,9.32,1.36,23.65-9,27.65,24-.16,51.81-2.26,65.38-22a44.89,44.89,0,0,1-7.57,47.4c21.27,1,44,15.4,45.34,36.65.92,14.16-8,27.56-19.59,35.68s-25.71,11.85-39.56,14.9C608.86,369.7,462.54,407.07,488.93,325Z"
-              transform="translate(-251 -101)"
-              fill="#333"
-            />
-            <ellipse
-              cx="194.86"
-              cy="372.3"
-              rx="14.09"
-              ry="26.42"
-              fill="#fdb797"
-            />
-            <ellipse
-              cx="497.8"
-              cy="372.3"
-              rx="14.09"
-              ry="26.42"
-              fill="#fdb797"
-            />
-          </svg>
+          {{ username }}
         </a>
         <ul
           ngbDropdownMenu
@@ -204,16 +360,17 @@
           aria-labelledby="navbarDropdown"
         >
           <li>
-            <a class="dropdown-item" routerLink="/profile">Mein Profil</a>
+            <a class="dropdown-item" routerLink="/profile" (click)="isMenuCollapsed = true">Mein Profil</a>
           </li>
           <li>
-            <a class="dropdown-item" routerLink="/settings">Einstellungen</a>
+            <a class="dropdown-item" routerLink="/settings" (click)="isMenuCollapsed = true">Einstellungen</a>
           </li>
           <li>
             <a
               class="dropdown-item"
               routerLink="/admin"
               *ngIf="userRole === 'admin'"
+              (click)="isMenuCollapsed = true"
               >Admin Panel</a
             >
           </li>
@@ -223,6 +380,7 @@
               class="dropdown-item"
               style="cursor: pointer"
               (click)="onLogout()"
+              (click)="isMenuCollapsed = true"
               >Logout</a
             >
           </li>
@@ -230,4 +388,5 @@
       </li>
     </ul>
   </div>
-</nav>
+  </div>
+</nav> -->

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { DataStorageService } from '../shared/data-storage.service';
@@ -21,7 +21,6 @@ export class BoardComponent implements OnInit {
   submitForm: FormGroup;
 
   constructor(
-    private boardService: BoardService,
     private modalService: NgbModal,
     private authService: AuthService,
     private dataStorageService: DataStorageService
@@ -40,7 +39,6 @@ export class BoardComponent implements OnInit {
     this.dataStorageService
       .fetchBoardItems()
       .valueChanges.subscribe((result: any) => {
-        console.log(result);
         this.boardContent = result.data.boardItems;
       });
 

@@ -17,11 +17,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthComponent } from './auth/auth.component';
 import { GraphQLModule } from './graphql.module';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbNavbar } from '@ng-bootstrap/ng-bootstrap';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ToastsContainer } from './shared/toasts/toasts-container.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AboutComponent } from './about/about.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AboutComponent } from './about/about.component';
     AdminPanelComponent,
     ToastsContainer,
     ProfileComponent,
-    AboutComponent
+    AboutComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,

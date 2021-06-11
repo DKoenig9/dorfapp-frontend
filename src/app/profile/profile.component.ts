@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user.model';
-import { DataStorageService } from '../shared/data-storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,14 +14,10 @@ export class ProfileComponent implements OnInit {
   user: User;
   profileForm: FormGroup;
   defaultPic = true;
-  constructor(
-    private authService: AuthService,
-    private dataStorageService: DataStorageService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe((user) => {
-      console.log(user);
       this.user = user;
     });
 
@@ -35,12 +30,8 @@ export class ProfileComponent implements OnInit {
   }
 
   onUpdate() {
-    console.log('update');
-    console.log(this.profileForm.value);
     let { username, email, password, phoneNumber } = this.profileForm.value;
-    console.log("Passwort: ",password);
-  
-  
+
     this.authService.updateUser(
       this.user.id,
       email,
@@ -51,8 +42,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  changePic(){
-    console.log("lesgo");
-    
+  changePic() {
+    console.log('Noch nicht implementiert');
   }
 }

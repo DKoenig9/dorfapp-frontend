@@ -1,10 +1,7 @@
-import { Component, PipeTransform, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../shared/toasts/toast.service';
-import { DecimalPipe } from '@angular/common';
-
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -14,7 +11,10 @@ import { map, startWith } from 'rxjs/operators';
 export class MainComponent implements OnInit {
   signupForm: FormGroup;
 
-  constructor(private toastService: ToastService) {}
+  constructor(
+    private toastService: ToastService,
+    private httpClient: HttpClient
+  ) {}
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -27,28 +27,10 @@ export class MainComponent implements OnInit {
 
   onSubmit() {
     const newUser = this.signupForm.value;
-    console.log(this.signupForm);
-
     console.log(
       `Jetzt soll eine Email an hofolperdorfapp@gmail.com versendet werden mit den dazugehörigen Daten: ${newUser.email}, ${newUser.username}, ${newUser.phoneNumber}, ${newUser.happy}`
     );
   }
 
-  showStandard() {
-    this.toastService.show('I am a standard toast');
-  }
-
-  showSuccess() {
-    this.toastService.show('I am a success toast', {
-      classname: 'bg-success text-light',
-      delay: 10000,
-    });
-  }
-
-  showDanger(dangerTpl) {
-    this.toastService.show(dangerTpl, {
-      classname: 'bg-danger text-light',
-      delay: 15000,
-    });
-  }
+  
 }

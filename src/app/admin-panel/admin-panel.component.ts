@@ -1,13 +1,10 @@
-import { DecimalPipe } from '@angular/common';
-import { Component, OnInit, PipeTransform } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, Subscription } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user.model';
-import { DataStorageService } from '../shared/data-storage.service';
 import { modalDelete } from '../shared/modals/modal-delete.component';
 import { ToastService } from '../shared/toasts/toast.service';
 import { AdminPanelService } from './admin-panel.service';
@@ -16,7 +13,6 @@ import { AdminPanelService } from './admin-panel.service';
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.css'],
-  providers: [DecimalPipe],
 })
 export class AdminPanelComponent implements OnInit {
   users: User[];
@@ -30,7 +26,6 @@ export class AdminPanelComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private dataStorageService: DataStorageService,
     private adminPanelService: AdminPanelService,
     private modalService: NgbModal,
     private toastService: ToastService
@@ -67,7 +62,6 @@ export class AdminPanelComponent implements OnInit {
       .signupUser(email, password, username, phoneNumber)
       .subscribe(
         ({ data }: any) => {
-          console.log(data);
           this.firstSearch = true;
           this.adminPanelService.addUser(data.createUser);
           this.toastService.show('Erfolgreich erstellt', {
@@ -76,7 +70,7 @@ export class AdminPanelComponent implements OnInit {
           });
         },
         (err) => {
-          console.log(err);
+          console.error(err);
           this.toastService.show(err, {
             classname: 'bg-danger text-light',
             delay: 5000,
@@ -93,7 +87,6 @@ export class AdminPanelComponent implements OnInit {
   openUpdate(content, user) {
     this.username = user.username;
     this.id = user.id;
-    console.log(user.userRole);
 
     this.updateForm = new FormGroup({
       email: new FormControl(user.email, [
@@ -112,11 +105,8 @@ export class AdminPanelComponent implements OnInit {
   }
 
   onUpdate() {
-    console.log(this.updateForm.value);
     const { email, username, password, phoneNumber, userRole } =
       this.updateForm.value;
-      console.log(password);
-      
 
     this.adminPanelService.updateUser(
       this.id,

@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataStorageService } from '../../shared/data-storage.service';
 import { WorkService } from '../work.service';
@@ -70,8 +70,6 @@ export class WorkAllComponent implements OnInit {
   }
 
   open(item) {
-    console.log(item);
-
     const modalRef = this.modalService.open(modalWork);
     modalRef.componentInstance.username = item.username;
     modalRef.componentInstance.phoneNumber = item.phoneNumber;
@@ -93,9 +91,6 @@ export class WorkAllComponent implements OnInit {
   }
 
   openUpdate(content, item) {
-    console.log(content);
-    console.log(item);
-
     this.itemName = item.job;
     this.id = item.id;
     this.itemType = item.__typename;
@@ -111,9 +106,6 @@ export class WorkAllComponent implements OnInit {
   }
 
   onUpdate() {
-    console.log('moin');
-    console.log(this.itemType);
-
     const { job, description } = this.updateForm.value;
 
     if (this.itemType === 'WorkNeed') {

@@ -69,7 +69,7 @@
 </ng-template>
 <div class="container">
   <div class="row">
-    <div class="col-md-3 g-4" *ngFor="let item of boardContent">
+    <div class="col-lg-3 col-md-4 g-4 d-flex justify-content-around" *ngFor="let item of boardContent">
       <div class="card h-100" style="width: 18rem">
         <img src="{{ item.imgUrl }}" class="card-img-top" alt="..." />
         <div class="card-body">
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <div class="col-md-3 g-4 h-100" *ngIf="userRole === 'admin'">
+    <div class="col-md-3 g-4 h-100 d-flex justify-content-around" *ngIf="userRole === 'admin'">
       <div class="card text-white bg-secondary mb-3" style="max-width: 18rem">
         <div class="card-header">Hinzufügen</div>
         <div class="card-body">

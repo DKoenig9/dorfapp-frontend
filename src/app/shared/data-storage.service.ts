@@ -112,7 +112,7 @@ export class DataStorageService {
           console.log(data);
         },
         (error) => {
-          console.log(error);
+          console.error(error);
         }
       );
   }
@@ -207,11 +207,9 @@ export class DataStorageService {
       .subscribe(
         (res) => {
           console.log('Erfolgreich gelöscht');
-
-          console.log(res);
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         }
       );
   }
@@ -290,11 +288,9 @@ export class DataStorageService {
       .subscribe(
         (res) => {
           console.log('Erfolgreich gelöscht');
-
-          console.log(res);
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         }
       );
   }

@@ -39,21 +39,15 @@ export class AdminPanelService {
   }
 
   updateOld(dataObj) {
-    console.log(dataObj);
-    console.log(this.oldValue);
-
     this.oldValue.forEach((element, index) => {
       if (element.id === dataObj.id) {
         this.oldValue[index] = dataObj;
       }
     });
-    console.log(this.oldValue);
     this.users.next(this.oldValue);
   }
 
   deleteUser(dataObj) {
-    console.log(dataObj.id);
-
     this.dataStorageService.deleteUserById(dataObj.id).subscribe(
       (res) => {
         console.log('Erfolgreich gelöscht');
@@ -69,7 +63,7 @@ export class AdminPanelService {
         });
       },
       (err) => {
-        console.log(err);
+        console.error(err);
         this.toastService.show(err, {
           classname: 'bg-danger text-light',
           delay: 5000,
@@ -81,8 +75,6 @@ export class AdminPanelService {
   searchUser(text) {
     this.dataStorageService.getUserBySomething(text).valueChanges.subscribe(
       ({ data }: any) => {
-        console.log(data.usersBySomething);
-
         this.addUser(data.usersBySomething);
 
         this.toastService.show('Suche erfolgreich', {
@@ -106,7 +98,6 @@ export class AdminPanelService {
       .updateUser(id, email, password, username, phoneNumber, userRole)
       .subscribe(
         ({ data }: any) => {
-          console.log(data.editUser);
           this.updateOld(data.editUser);
           this.toastService.show('Erfolgreich geändert', {
             classname: 'bg-success text-light',
@@ -114,7 +105,11 @@ export class AdminPanelService {
           });
         },
         (err) => {
-          console.log(err);
+          console.error(err);
+          this.toastService.show(err, {
+            classname: 'bg-danger text-light',
+            delay: 5000,
+          });
         }
       );
   }

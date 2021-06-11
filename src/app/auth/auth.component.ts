@@ -1,6 +1,6 @@
-import { Component, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { ToastService } from '../shared/toasts/toast.service';
 import { AuthService } from './auth.service';
 
@@ -38,7 +38,7 @@ export class AuthComponent implements OnInit {
         });
       },
       (err) => {
-        console.log(err);
+        console.error(err);
         this.toastService.show('Fehler', {
           classname: 'bg-danger text-light',
           delay: 15000,
